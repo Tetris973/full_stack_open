@@ -18,7 +18,7 @@ const Content = (props) => {
   return(
     <div>
       {props.dict.map((couple) => {
-        return <Part name={couple.name} exercice={couple.exercice}/>
+        return <Part name={couple.name} exercice={couple.exercises}/>
       })}
     </div>
   )
@@ -36,50 +36,34 @@ const Total = (props) => {
 }
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+}
 
-  const dict = [
-    {
-      "name": part1,
-      "exercice": exercises1
-    },
-    {
-      "name": part2,
-      "exercice": exercises2
-    },
-    {
-      "name": part3,
-      "exercice": exercises3
-    }
-  ]
 
   return (
     <div>
-      <Header course={course}/>
-      <Content dict={dict}/>
-      <Total nb={exercises1 + exercises2 + exercises3}/>
+      <Header course={course.name}/>
+      <Content dict={course.parts}/>
+      <Total nb={course.parts.reduce((sum, part) => sum + part.exercises, 0)
+}/>
     </div>
   )
 }
 
-/*
-const App = () => {
-  // const-definitions
-
-  return (
-    <div>
-      <Header course={course} />
-      <Content ... />
-      <Total ... />
-    </div>
-  )
-}
-*/
 
 export default App
