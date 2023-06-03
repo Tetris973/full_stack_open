@@ -6,15 +6,24 @@ const Header = (props) => {
   )
 }
 
+const Part = (props) => {
+  return(
+    <div>
+      <p> {props.name} {props.exercice} </p>
+    </div>
+  )
+}
+
 const Content = (props) => {
   return(
     <div>
       {props.dict.map((couple) => {
-        return <p>{couple.exercice}</p>
+        return <Part name={couple.name} exercice={couple.exercice}/>
       })}
     </div>
   )
 }
+
 
 const Total = (props) => {
   return (
@@ -54,12 +63,6 @@ const App = () => {
     <div>
       <Header course={course}/>
       <Content dict={dict}/>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}Ò
-      </p>
       <Total nb={exercises1 + exercises2 + exercises3}/>
     </div>
   )
