@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { nanoid } from 'nanoid';
 
 const Header = ({course}) => {
   return (
@@ -30,10 +31,11 @@ const Button = (props) => (
 const Buttons = (props) => (
   <div>
     {props.dict.map((couple) => {
-      return <Button key={couple.text} handleClick={couple.handleClick} text={couple.text}/>
+      return <Button key={couple.id} handleClick={couple.handleClick} text={couple.text}/>
     })}
   </div>
-)
+);
+
 
 const Statistics = (props) => {
   if (props.dict.every((couple) => couple.count === 0)) {
@@ -52,7 +54,7 @@ const Statistics = (props) => {
         <table>
           <tbody>
             {props.dict.map((couple) => {
-              return <Statistic key={couple.name} name={couple.name} count={couple.count}/>
+              return <Statistic key={couple.id} name={couple.name} count={couple.count}/>
             })}
             <Total nb={sum}/>
             <Average good={good} neutral={neutral} bad={bad}/>
@@ -120,33 +122,39 @@ const App = () => {
 
   const buttonsData = [
     {
+      id: nanoid(),
       handleClick: () => setGood(good + 1),
       text: "good"
     },
     {
+      id: nanoid(),
       handleClick: () => setNeutral(neutral + 1),
       text: "neutral"
     },
     {
+      id: nanoid(),
       handleClick: () => setBad(bad + 1),
       text: "bad"
     }
-  ]
-
+  ];
+  
   const statisticsData = [
     {
+      id: nanoid(),
       name: "good",
       count: good
     },
     {
+      id: nanoid(),
       name: "neutral",
       count: neutral
     },
     {
+      id: nanoid(),
       name: "bad",
       count: bad
-    },
-  ]
+    }
+  ];
 
   return (
     <div>
