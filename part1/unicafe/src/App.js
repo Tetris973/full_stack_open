@@ -29,8 +29,8 @@ const Button = (props) => (
 
 const Buttons = (props) => (
   <div>
-    {props.dict.map((couple, index) => {
-      return <Button key={index} handleClick={couple.handleClick} text={couple.text}/>
+    {props.dict.map((couple) => {
+      return <Button key={couple} handleClick={couple.handleClick} text={couple.text}/>
     })}
   </div>
 )
@@ -51,8 +51,8 @@ const Statistics = (props) => {
       <div>
         <table>
           <tbody>
-            {props.dict.map((couple, index) => {
-              return <Statistic key={index} name={couple.name} count={couple.count}/>
+            {props.dict.map((couple) => {
+              return <Statistic key={couple} name={couple.name} count={couple.count}/>
             })}
             <Total nb={sum}/>
             <Average good={good} neutral={neutral} bad={bad}/>

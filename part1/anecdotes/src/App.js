@@ -50,6 +50,8 @@ const App = () => {
     setVotes(newVotes);
   }
 
+  
+
   return (
     <div>
       <Header course="Anecdote of the day"/>
