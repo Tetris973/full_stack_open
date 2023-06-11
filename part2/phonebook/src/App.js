@@ -1,51 +1,8 @@
 import { useState } from 'react'
 import { nanoid } from 'nanoid'
-
-const FilteredPersons = ({ persons, filter }) => {
-  const filteredPersons = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
-
-  return (
-    <div>
-      {filteredPersons.length === 0 ? (
-        <div>There are no persons</div>
-      ) : (
-        filteredPersons.map((person) => (
-          <div key={person.id}>
-            {person.name} - {person.number}
-          </div>
-        ))
-      )}
-    </div>
-  )
-}
-
-const PersonForm = ({ newName, newNumber, handleAddPerson, handlePersonChange, handleNumberChange }) => {
-  return (
-    <div>
-      <form onSubmit={handleAddPerson}>
-        <div>
-          name:
-          <input value={newName} onChange={handlePersonChange} />
-        </div>
-        <div>
-          number:
-          <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-    </div>
-  )
-}
-
-const FilterInput = ({ filter, handleFilterChange }) => {
-  return (
-    <div>
-      filter shown with <input value={filter} onChange={handleFilterChange} />
-    </div>
-  )
-}
+import FilteredPersons from './components/FilteredPersons'
+import PersonForm from './components/PersonForm'
+import FilterInput from './components/FilterInput'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -87,32 +44,17 @@ const App = () => {
     setNewNumber('')
   }
 
-  const handlePersonChange = (event) => {
-    console.log(event.target.value)
-    setNewName(event.target.value)
-  }
-
-  const handleNumberChange = (event) => {
-    console.log(event.target.value)
-    setNewNumber(event.target.value)
-  }
-
-  const handleFilterChange = (event) => {
-    console.log(event.target.value)
-    setFilter(event.target.value)
-  }
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <FilterInput filter={filter} handleFilterChange={handleFilterChange} />
+      <FilterInput filter={filter} handleFilterChange={(event) => setFilter(event.target.value)} />
       <h3>Add a new</h3>
       <PersonForm
         newName={newName}
         newNumber={newNumber}
         handleAddPerson={handleAddPerson}
-        handlePersonChange={handlePersonChange}
-        handleNumberChange={handleNumberChange}
+        handlePersonChange={(event) => setNewName(event.target.value)}
+        handleNumberChange={(event) => setNewNumber(event.target.value)}
       />
       <h2>Numbers</h2>
       <div>
