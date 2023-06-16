@@ -1,20 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import FilteredPersons from './components/FilteredPersons'
 import PersonForm from './components/PersonForm'
 import FilterInput from './components/FilterInput'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 },
-  ])
+  const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    axios.get('http://192.168.1.107:3001/persons').then((response) => {
+      setPersons(response.data)
+    })
+  }, [])
 
   const handleAddPerson = (event) => {
     event.preventDefault()
@@ -47,7 +49,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <FilterInput filter={filter} handleFilterChange={(event) => setFilter(event.target.value)} />
+      <FilterInput
+        filter={filter}
+        handleFilterChange={(event) => setFilter(event.target.value)}
+      />
       <h3>Add a new</h3>
       <PersonForm
         newName={newName}
