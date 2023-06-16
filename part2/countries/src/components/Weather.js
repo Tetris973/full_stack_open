@@ -7,6 +7,8 @@ import axios from 'axios'
 const Weather = ({ capital }) => {
   const [weatherData, setWeatherData] = useState({})
 
+  const weatherIconApi = 'http://openweathermap.org/img/wn/'
+
   useEffect(() => {
     if (!capital) return // Don't make the API call if the capital is not set
 
@@ -48,18 +50,30 @@ const Weather = ({ capital }) => {
       })
   }, [capital])
 
+  const constructIconURL = (icon) => {
+    if (!icon) return ''
+    return `${weatherIconApi}${icon}@2x.png`
+  }
+
+  const handleImageError = (e) => {
+    e.target.style.display = 'none' // hide the image if there's an error
+  }
+
   return (
     <div>
       <h3>Weather in {capital}</h3>
       <div>
-        <strong>temperature:</strong> {weatherData.current?.temperature} Celsius
+        <strong>temperature:</strong> {weatherData.main?.temp} Celsius
       </div>
-      <img
-        src={weatherData.current?.weather_icons[0]}
-        alt={weatherData.current?.weather_descriptions[0]}
-      />
+      {weatherData.weather && weatherData.weather[0] && (
+        <img
+          src={constructIconURL(weatherData.weather[0].icon)}
+          alt="weather icon"
+          onError={handleImageError}
+        />
+      )}
       <div>
-        <strong>wind:</strong> {weatherData.current?.wind_speed} m/s
+        <strong>wind:</strong> {weatherData.wind?.speed} m/s
       </div>
     </div>
   )

@@ -18,7 +18,7 @@ const Country = ({ country }) => {
         ))}
       </ul>
       <div>{country.flag}</div>
-      <Weather capital={country.capital} />
+      <Weather capital={country.capital[0]} />
     </div>
   )
 }
