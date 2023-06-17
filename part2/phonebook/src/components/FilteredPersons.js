@@ -1,7 +1,10 @@
 import React from 'react'
+import Person from './Person'
 
-const FilteredPersons = ({ persons, filter }) => {
-  const filteredPersons = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
+const FilteredPersons = ({ persons, filter, handleDelete }) => {
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(filter.toLowerCase())
+  )
 
   return (
     <div>
@@ -9,9 +12,11 @@ const FilteredPersons = ({ persons, filter }) => {
         <div>There are no persons</div>
       ) : (
         filteredPersons.map((person) => (
-          <div key={person.id}>
-            {person.name} - {person.number}
-          </div>
+          <Person
+            key={person.id}
+            person={person}
+            handleDelete={() => handleDelete(person.id)}
+          />
         ))
       )}
     </div>

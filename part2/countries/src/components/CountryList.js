@@ -9,8 +9,7 @@ const CountryList = ({ countries, handleShowCountry }) => {
           <span>{country.name.common}</span>
           <button
             onClick={() => handleShowCountry(country)}
-            style={{ display: 'inline-block', marginLeft: '5px' }}
-          >
+            style={{ display: 'inline-block', marginLeft: '5px' }}>
             show
           </button>
         </div>
