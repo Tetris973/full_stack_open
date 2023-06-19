@@ -1,6 +1,6 @@
 // persons service
 import axios from 'axios'
-const baseUrl = 'http://192.168.1.107:3001/persons'
+const baseUrl = '/api/persons'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
