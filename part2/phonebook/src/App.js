@@ -25,7 +25,7 @@ const App = () => {
     setTimeout(() => {
       setMessage(null)
       setMessageType(null)
-    }, 2500)
+    }, 5000)
   }
 
   useEffect(() => {
@@ -55,11 +55,15 @@ const App = () => {
             notification(`Updated ${returnedPerson.name}`, types.SUCCESS)
           })
           .catch((error) => {
-            notification(
-              `Information of ${person.name} has already been removed from server`,
-              types.ERROR
-            )
-            setPersons(persons.filter((p) => p.id !== person.id))
+            if (error.response.data.error) {
+              notification(error.response.data.error, types.ERROR)
+            } else {
+              notification(
+                `Information of ${person.name} has already been removed from server`,
+                types.ERROR
+              )
+              setPersons(persons.filter((p) => p.id !== person.id))
+            }
           })
       }
     } else {
@@ -81,10 +85,15 @@ const App = () => {
       number: newNumber,
     }
 
-    personsService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson))
-      notification(`Added ${returnedPerson.name}`, types.SUCCESS)
-    })
+    personsService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson))
+        notification(`Added ${returnedPerson.name}`, types.SUCCESS)
+      })
+      .catch((error) => {
+        notification(error.response.data.error, types.ERROR)
+      })
     setNewName('')
     setNewNumber('')
   }
